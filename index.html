@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>gorou report - uses publicly available datasets from Johns Hopkins University</title>
+    <meta name="description" content="This is a site that uses publicly available datasets from Johns Hopkins University to compile and display its own data." />
+
+    <meta property="og:title" content="gorou report - uses publicly available datasets from Johns Hopkins University" />
+    <meta property="og:description" content="This is a site that uses publicly available datasets from Johns Hopkins University to compile and display its own data." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://covid-19.gorou.dev/" />
+    <meta property="og:image" content="https://covid-19.gorou.dev/img/logo.png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gorou_178" />
+    <meta name="twitter:creator" content="@gorou_178" />
+    <meta name="twitter:image" content="https://covid-19.gorou.dev/img/logo.png" />
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://covid-19.gorou.dev/apple-touch-icon.png">
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+    <link href="/css/app.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="/js/app.js"></script>
+
+    <script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "url": "https://covid-19.gorou.dev/",
+            "logo": "https://covid-19.gorou.dev/img/logo.png"
+        },
+        {
+            "@context":  "http://schema.org/",
+            "@type": "CreativeWork",
+            "name": "gorou report - uses publicly available datasets from Johns Hopkins University",
+            "text": "This is a site that uses publicly available datasets from Johns Hopkins University to compile and display its own data.",
+            "isBasedOn": {
+                "@type": "CreativeWork",
+                "schema:name": "JHU Coronavirus COVID-19 Global Cases, by country",
+                "schema:publisher": "Johns Hopkins University",
+                "schema:url": "https://console.cloud.google.com/marketplace/details/johnshopkins/covid19_jhu_global_cases"
+            }
+        }
+    ]
+    </script>
+</head>
+<body>
+    <header class="sticky report-header">
+        <a href="/" class="logo"><img src="/img/logo_icon.png" class="logo-icon" alt="">gorou report</a>
+    </header>
+	<div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="card fluid">
+                    <div class="section">
+                        <h1>新型コロナウイルスの感染状況</h1>
+                    </div>
+                    <div class="section dark double-padded">
+                        <p>このサイトは Johns Hopkins University の公開データセットを利用して独自に集計・表示を行っているサイトです。データは公開データセット提供元の規約に準拠します。そのためこの作品は クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンスの下に提供されています。</p>
+                        <p>公開データセットは以下を参照ください。<br><a href="https://console.cloud.google.com/marketplace/details/johnshopkins/covid19_jhu_global_cases">JHU Coronavirus COVID-19 Global Cases, by country</a></p>
+                        <p>最終集計日: <span class="js-last-tally-date"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="graph-loading" class="report-loading-content">
+                    <p>レポートデータをロードしています...</p>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="report-deaths" aria-label="COVID-19 daily report deaths" role="img">
+                        <p>COVID-19 daily report deaths</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="report-recovered" aria-label="COVID-19 daily report recovered" role="img">
+                        <p>COVID-19 daily report recovered</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="report-active" aria-label="COVID-19 daily report active" role="img">
+                        <p>COVID-19 daily report active</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="report-confirmed" aria-label="COVID-19 daily report confirmed" role="img">
+                        <p>COVID-19 daily report confirmed</p>
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="report-footer footer-license">
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />この 作品 は <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンス</a>の下に提供されています。
+    </footer>
+    <script>
+        window.onload = function() {
+            const reportPeriod = 30;
+            const datasetsUrlBase = 'https://us-central1-bq-github-sample-data.cloudfunctions.net/gm_covid19_reports/';
+            loadReport(datasetsUrlBase, reportPeriod);
+            document.getElementsByClassName('js-last-tally-date')[0].innerHTML = newDateString(-2, 'YYYY年MM月DD日');
+        };
+    </script>
+</body>
+</html>

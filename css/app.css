@@ -1,0 +1,16 @@
+.report-header {
+    background-color: rgb(243, 243, 243);
+}
+.report-loading-content {
+    text-align: center;
+}
+.footer-license {
+    text-align: center;
+}
+.logo-icon {
+    height: 30px;
+    vertical-align: middle;
+}
+.report-footer {
+    background-color: rgb(243, 243, 243);
+}
