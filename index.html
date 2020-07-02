@@ -94,30 +94,68 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-6 js-country-left">
+                <label for="country-left">グラフ表示させる国を選ぶ</label>
+                <select name="country_left" id="country_left"></select>
+            </div>
+            <div class="col-sm-6 js-country-right">
+                <label for="country-right">グラフ表示させる国を選ぶ</label>
+                <select name="country_right" id="country_right"></select>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 <div class="report-item">
-                    <canvas id="report-deaths" aria-label="COVID-19 daily report deaths" role="img">
+                    <canvas id="left-report-deaths" aria-label="COVID-19 daily report deaths" role="img">
                         <p>COVID-19 daily report deaths</p>
                     </canvas>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="report-item">
-                    <canvas id="report-recovered" aria-label="COVID-19 daily report recovered" role="img">
+                    <canvas id="right-report-deaths" aria-label="COVID-19 daily report deaths" role="img">
+                        <p>COVID-19 daily report deaths</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="left-report-recovered" aria-label="COVID-19 daily report recovered" role="img">
                         <p>COVID-19 daily report recovered</p>
                     </canvas>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="report-item">
-                    <canvas id="report-active" aria-label="COVID-19 daily report active" role="img">
+                    <canvas id="right-report-recovered" aria-label="COVID-19 daily report recovered" role="img">
+                        <p>COVID-19 daily report recovered</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="left-report-active" aria-label="COVID-19 daily report active" role="img">
                         <p>COVID-19 daily report active</p>
                     </canvas>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="report-item">
-                    <canvas id="report-confirmed" aria-label="COVID-19 daily report confirmed" role="img">
+                    <canvas id="right-report-active" aria-label="COVID-19 daily report active" role="img">
+                        <p>COVID-19 daily report active</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="left-report-confirmed" aria-label="COVID-19 daily report confirmed" role="img">
+                        <p>COVID-19 daily report confirmed</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="report-item">
+                    <canvas id="right-report-confirmed" aria-label="COVID-19 daily report confirmed" role="img">
                         <p>COVID-19 daily report confirmed</p>
                     </canvas>
                 </div>
@@ -129,10 +167,30 @@
     </footer>
     <script>
         window.onload = function() {
-            const reportPeriod = 30;
             const datasetsUrlBase = 'https://us-central1-bq-github-sample-data.cloudfunctions.net/gm_covid19_reports/';
-            loadReport(datasetsUrlBase, reportPeriod);
-            document.getElementsByClassName('js-last-tally-date')[0].innerHTML = newDateString(-2, 'YYYY年MM月DD日');
+            loadReport(datasetsUrlBase);
+            //document.getElementsByClassName('js-last-tally-date')[0].innerHTML = newDateString(-2, 'YYYY年MM月DD日');
+
+            // const leftOptions = document.querySelectorAll("#country_left option");
+            // const rightOptions = document.querySelectorAll("#country_right option");
+            // document.getElementById('country-left').addEventListener('change', function(){
+            //     console.log(leftOptions[this.selectedIndex].value);
+            //     //updateChart('left', leftOptions[this.selectedIndex].value);
+            // });
+
+            /*
+            const globalReports[country][dimention][]{x,y}
+            const charts[left|right][dimention]
+
+            // target: left/right
+            // selectCountry: Japan, America...
+            function updateChart(target, selectCountry) {
+                for (let i = 0; i < dimentions.length; ++i) {
+                    charts[target][dimentions[i]].data.datasets = globalReports[selectCountry][dimentions[i]];
+                    charts[target][dimentions[i]].update();
+                }
+            }
+            */
         };
     </script>
 </body>
