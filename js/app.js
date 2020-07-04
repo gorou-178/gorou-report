@@ -136,15 +136,23 @@ const updateChart = function(target, selectCountry) {
     }
 }
 
+const dateSort = function(a, b){
+    return moment(a).diff(b);
+};
+
 /**
  * レポートデータを元にchartを作成
  * @param {*} results
  */
 const createReportChart = function(response) {
     const reportDataset = JSON.parse(response.data);
-    const reportDateList = Array.from(new Set(reportDataset.map(function(report){
-        return moment(report.date).format('MM/DD');
+    const reportDates = Array.from(new Set(reportDataset.map(function(report){
+        return report.date;
     })));
+    let reportDateList = reportDates.sort(dateSort);
+    reportDateList = reportDateList.map(function(date){
+        return moment(date).format('MM/DD');
+    });
     console.log('reportDateList: ', reportDateList);
 
     document.getElementsByClassName('js-last-tally-date')[0].innerHTML = reportDateList[0];
@@ -202,7 +210,7 @@ const createReportChart = function(response) {
     disabledLoadingContent();
 
     const chartColor = 'rgb(255, 99, 132)';
-    charts.left.deaths = (createChart('left-report-deaths',
+    charts.left.deaths = createChart('left-report-deaths',
         createConfig('line', reportDateList, [{
                 label: 'Deaths',
                 backgroundColor: chartColor,
@@ -212,8 +220,8 @@ const createReportChart = function(response) {
             }],
             createOptions('Report Deaths', getMaxValueForChart(globalReports['Japan']['deaths']))
         )
-    ));
-    charts.right.deaths = (createChart('right-report-deaths',
+    );
+    charts.right.deaths = createChart('right-report-deaths',
         createConfig('line', reportDateList, [{
                 label: 'Deaths',
                 backgroundColor: chartColor,
@@ -223,7 +231,7 @@ const createReportChart = function(response) {
             }],
             createOptions('Report Deaths', getMaxValueForChart(globalReports['US']['deaths']))
         )
-    ));
+    );
 
 
     charts.left.confirmed = createChart('left-report-confirmed',
@@ -249,6 +257,7 @@ const createReportChart = function(response) {
         )
     );
 
+
     charts.left.active = createChart('left-report-active',
         createConfig('line', reportDateList, [{
                 label: 'active',
@@ -271,6 +280,7 @@ const createReportChart = function(response) {
             createOptions('Report active', getMaxValueForChart(globalReports['US']['active']))
         )
     );
+
 
     charts.left.recovered = createChart('left-report-recovered',
         createConfig('line', reportDateList, [{
