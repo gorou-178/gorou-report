@@ -52,7 +52,7 @@ const createChart = function(id, config) {
 const createOptions = function(title, maxNum) {
     return {
         responsive: true,
-        aspectRatio: 0.5,
+        aspectRatio: 0.8,
         title: {
             display: true,
             text: title
@@ -62,7 +62,7 @@ const createOptions = function(title, maxNum) {
             intersect: false,
         },
         hover: {
-            mode: 'nearest',
+            mode: 'index',
             intersect: false
         },
         scales: {
@@ -72,9 +72,14 @@ const createOptions = function(title, maxNum) {
                     display: true,
                     labelString: 'Date'
                 },
+                gridLines: {
+                    display: true,
+					drawBorder: true,
+					drawOnChartArea: false
+                },
                 ticks: {
                     callback: function(dataLabel, index) {
-                        return index % 3 === 0 ? dataLabel : '';
+                        return index % 2 === 0 ? dataLabel : '';
                     }
                 }
             }],
@@ -155,7 +160,7 @@ const createReportChart = function(response) {
     });
     console.log('reportDateList: ', reportDateList);
 
-    document.getElementsByClassName('js-last-tally-date')[0].innerHTML = reportDateList[0];
+    document.getElementsByClassName('js-last-tally-date')[0].innerHTML = reportDateList[reportDateList.length-1];
 
     const reportCountries = Array.from(new Set(reportDataset.map(function(report){
         return report.country;
@@ -209,9 +214,10 @@ const createReportChart = function(response) {
 
     disabledLoadingContent();
 
-    const chartColor = 'rgb(255, 99, 132)';
+
+    const chartColor = 'rgb(119, 136, 153)';
     charts.left.deaths = createChart('left-report-deaths',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'Deaths',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -222,7 +228,7 @@ const createReportChart = function(response) {
         )
     );
     charts.right.deaths = createChart('right-report-deaths',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'Deaths',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -235,7 +241,7 @@ const createReportChart = function(response) {
 
 
     charts.left.confirmed = createChart('left-report-confirmed',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'confirmed',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -246,7 +252,7 @@ const createReportChart = function(response) {
         )
     );
     charts.right.confirmed = createChart('right-report-confirmed',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'confirmed',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -259,7 +265,7 @@ const createReportChart = function(response) {
 
 
     charts.left.active = createChart('left-report-active',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'active',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -270,7 +276,7 @@ const createReportChart = function(response) {
         )
     );
     charts.right.active = createChart('right-report-active',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'active',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -283,7 +289,7 @@ const createReportChart = function(response) {
 
 
     charts.left.recovered = createChart('left-report-recovered',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'recovered',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
@@ -294,7 +300,7 @@ const createReportChart = function(response) {
         )
     );
     charts.right.recovered = createChart('right-report-recovered',
-        createConfig('line', reportDateList, [{
+        createConfig('bar', reportDateList, [{
                 label: 'recovered',
                 backgroundColor: chartColor,
                 borderColor: chartColor,
