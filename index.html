@@ -94,12 +94,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 js-country-left">
-                <label for="country-left">グラフ表示させる国を選ぶ</label>
+            <div class="col-sm-offset-1 col-sm-5 js-country-left">
+                <label for="country-left">国を選択</label>
                 <select name="country_left" id="country_left"></select>
             </div>
-            <div class="col-sm-6 js-country-right">
-                <label for="country-right">グラフ表示させる国を選ぶ</label>
+            <div class="col-sm-offset-1 col-sm-5 js-country-right">
+                <label for="country-right">国を選択</label>
                 <select name="country_right" id="country_right"></select>
             </div>
         </div>
@@ -169,28 +169,6 @@
         window.onload = function() {
             const datasetsUrlBase = 'https://us-central1-bq-github-sample-data.cloudfunctions.net/gm_covid19_reports/';
             loadReport(datasetsUrlBase);
-            //document.getElementsByClassName('js-last-tally-date')[0].innerHTML = newDateString(-2, 'YYYY年MM月DD日');
-
-            // const leftOptions = document.querySelectorAll("#country_left option");
-            // const rightOptions = document.querySelectorAll("#country_right option");
-            // document.getElementById('country-left').addEventListener('change', function(){
-            //     console.log(leftOptions[this.selectedIndex].value);
-            //     //updateChart('left', leftOptions[this.selectedIndex].value);
-            // });
-
-            /*
-            const globalReports[country][dimention][]{x,y}
-            const charts[left|right][dimention]
-
-            // target: left/right
-            // selectCountry: Japan, America...
-            function updateChart(target, selectCountry) {
-                for (let i = 0; i < dimentions.length; ++i) {
-                    charts[target][dimentions[i]].data.datasets = globalReports[selectCountry][dimentions[i]];
-                    charts[target][dimentions[i]].update();
-                }
-            }
-            */
         };
     </script>
 </body>
